@@ -31,24 +31,15 @@ Lebesgue积分的三种定义方式
 令![](http://latex.codecogs.com/gif.latex?e_k=\\{x:x\in%20E%20\text{%20and%20}y_k\le%20f(x)<y_{k+1}\\})  
 则Lebesgue小和s和大和S分别定义为    
 ![](http://latex.codecogs.com/gif.latex?s=\sum_{k=0}^{n-1}y_k\mu(e_k)\text{,%20}S=\sum_{k=0}^{n-1}y_{k+1}\mu(e_{k}))    
-其中μ(e<sub>k</sub>)表示可测集合e<sub>k</sub>的测度
+其中μ(e<sub>k</sub>)表示可测集合e<sub>k</sub>的测度。
 
 
-\begin{definition}[可测函数的积分的定义1]
-\label{def1}
-设$f(x)$为可测函数,s和S分别为其Lebesgue小和和大和，令
-\begin{equation}
-U=sup{s}, V=inf{S}\nonumber
-\end{equation}
-当
-\begin{equation}
-\lambda=max(y_{i+1}-y_k)\rightarrow 0\nonumber
-\end{equation}
-时，如果$U=V$，则称$f(x)$在E上可积，记为
-\begin{equation}
-\int_{E}f(x)dx=U(\text{或}V)\nonumber
-\end{equation}
-\end{definition}
+**[定义4 可测函数的积分的定义1]**   
+设f(x)为可测函数,s和S分别为其Lebesgue小和和大和，令   
+![](http://latex.codecogs.com/gif.latex?U=sup{s}\text{,%20}V=inf{S})
+当![](http://latex.codecogs.com/gif.latex?\lambda=max(y_{i+1}-y_k)\rightarrow0) 时，如果U=V，则称f(x)在E上可积，记为    ![](http://latex.codecogs.com/gif.latex?\int_{E}f(x)dx=U(\text{or}V)\) 
+
+
 
 定义\ref{def1}来自于\cite{de3}，其基于可测函数$f(x)$,分别构造了两个特殊的和具体的简单函数序列
 \begin{equation}
