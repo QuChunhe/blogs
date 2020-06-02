@@ -7,11 +7,11 @@ Lebesgue积分的三种定义方式
 
 
 
-##[定义1 简单函数(Simple Function)]##   
-设$f(x)$是定义在$E$上的简单函数，则$f(x)$可以表示为
-\begin{equation}
- f(x)=\sum_{i=1}^{n}\alpha_{i}\chi_{E_i}(x)\nonumber
-\end{equation}
+**[定义1 简单函数(Simple Function)]**   
+设f(x)是定义在E上的简单函数，则f(x)可以表示为
+![](http://latex.codecogs.com/gif.latex?f(x)=\sum_{i=1}^{n}\alpha_{i}\chi_{E_i}(x))
+
+
 其中${E_i}$是可测集合并满足$\bigcup_{i=1}^{n}=E, E_i\cap E_j=\varnothing (i\neq j) $, $\chi_{E_i}(x)$为定义在集合 $E_i$上的指示函数。
 \end{definition}
 
