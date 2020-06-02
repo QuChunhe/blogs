@@ -65,7 +65,7 @@ Lebesgue小和s和大和S分别对应简单函数h<sub>λ</sub>(x)和g<sub>λ</s
 ![](http://latex.codecogs.com/gif.latex?\int_{E}f(x)dx=\lim_{n\to+\infty}\int_{E}f_{n}(x))   
 
 
-显然，在[定义4]中的简单函数序列{h<sub>λ</sub>(x)}和{g<sub>λ</sub>(x)}满足在[定义6]中的条件(a)和(b)。因此，相比于[定义4]，[定义6]更具一般性。然而，为了确保[定义6]是良好定义的，需要证明如下定理。
+显然，在[定义4]中的简单函数序列{h<sub>λ</sub>(x)}和{g<sub>λ</sub>(x)}满足在[定义6]中的条件(a)和(b)。因此，相比于[定义4]，[定义6]更具一般性。然而，为了确保[定义6]是良好定义的，需要证明如下定理。   
 **[定理1]**   
 如果两个函数序列{g<sub>n</sub>}和{h<sub>n</sub>}分别满足定义的条件(a)和(b)，那么   
 ![](http://latex.codecogs.com/gif.latex?\lim_{n\to+\infty}\int%20h_n(x)dx=\lim_{n\to+\infty}\int%20g_n(x)dx) 
@@ -77,7 +77,7 @@ Lebesgue小和s和大和S分别对应简单函数h<sub>λ</sub>(x)和g<sub>λ</s
 \label{def2_2}
 设f(x)为广义实值可测函数，如果存在一个可积简单函数序列{f<sub>n</sub>}满足如下性质   
 ![](http://latex.codecogs.com/gif.latex?\text{(a)}\{f_n\}\text{%20is%20a%20Cauchy%20sequence%20in%20the%20mean})   
-![](http://latex.codecogs.com/gif.latex?\text{(b')}\{f_{n}\}\text{%20converges%20in%20measure%20to%20}f(x))    
+![](http://latex.codecogs.com/gif.latex?\text{(b)}\{f_{n}\}\text{%20converges%20in%20measure%20to%20}f(x))    
 则称f(x)可积
 
 \begin{flalign}
