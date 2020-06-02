@@ -59,7 +59,7 @@ Lebesgue小和s和大和S分别对应简单函数h<sub>λ</sub>(x)和g<sub>λ</s
 
 **[定义6 可测函数的积分的定义2]**   
 设f(x)为广义实值可测函数，如果存在一个可积简单函数序列{f<sub>n</sub>}满足如下性质
-![](http://latex.codecogs.com/gif.latex?\text{(a)}\{f_n\}\text{%20is%20a%20Cauchy%20sequence%20in%20the%20mean}\\\text{(b)}\lim_{n\to+\infty}f_n=f(x)\text{%20a.e}) 
+![](http://latex.codecogs.com/gif.latex?\text{(a)}\{f_n\}\text{%20is%20a%20Cauchy%20sequence%20in%20the%20mean}\\\\\text{(b)}\lim_{n\to+\infty}f_n=f(x)\text{%20a.e}) 
 
 
 &\text{(a) }\{f_n\}\text{为依平均的Cauchy序列} \\
