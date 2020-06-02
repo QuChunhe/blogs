@@ -22,24 +22,17 @@ Lebesgue积分的三种定义方式
 设(X, Ω, μ)$为可测空间，f(x)为一个可测简单函数，则f(x)的积分定义为   
 ![](http://latex.codecogs.com/gif.latex?\int_{E}f(x)=\sum_{i=1}^{n}\alpha_{i}\mu(E_i)) 
 
-如果简单函数f(x)的积分存在，即如果存在可测集合E<sub>i</sub>使得μ(E<sub>i</sub>)=∞,则在此集合上的取值α<sub>i</sub>=0,那么称f(x)是可积的或者称$f(x)$是一个可积的简单函数。
+如果简单函数f(x)的积分存在，即如果存在可测集合E<sub>i</sub>使得μ(E<sub>i</sub>)=∞,则在此集合上的取值α<sub>i</sub>=0,那么称f(x)是可积的或者称f(x)是一个可积的简单函数。
 
 
-\begin{definition}[Lebesgue小和和大和]
-设可测函数$f(x)$定义在E上，其值在A与B之间。在$[A,B]$中插入分点
-\begin{equation}
- A=y_0<y_1<\dots<y_n=B\nonumber
-\end{equation}
-令
-\begin{equation}
- e_k=\{x:x\in E \text{ 并且 }y_k\le f(x)< y_{k+1}\}\nonumber
-\end{equation}
-则Lebesgue小和s和大和S分别定义为
-\begin{equation}
- s=\sum_{k=0}^{n-1} y_k\mu(e_k), S=\sum_{k=0}^{n-1} y_{k+1}\mu(e_{k})\nonumber
-\end{equation}
-其中$\mu(e_k)$表示可测集合$e_k$的测度
-\end{definition}
+**[定义3 Lebesgue小和和大和]**
+设可测函数f(x)定义在E上，其值在A与B之间。在[A,B]中插入分点
+![](http://latex.codecogs.com/gif.latex?A=y_0<y_1<\dots<y_n=B)   
+令![](http://latex.codecogs.com/gif.latex? e_k=\{x:x\in E \text{ 并且 }y_k\le f(x)< y_{k+1}\})  
+则Lebesgue小和s和大和S分别定义为    
+![](http://latex.codecogs.com/gif.latex?s=\sum_{k=0}^{n-1}y_k\mu(e_k)\text{, }S=\sum_{k=0}^{n-1}y_{k+1}\mu(e_{k}))    
+其中μ(e<sub>k</sub>)表示可测集合e<sub>k</sub>的测度
+
 
 \begin{definition}[可测函数的积分的定义1]
 \label{def1}
