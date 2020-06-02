@@ -73,29 +73,19 @@ Lebesgue小和s和大和S分别对应简单函数h<sub>λ</sub>(x)和g<sub>λ</s
 
 [定义6]中的条件(b)可以进一步放宽为{f<sub>n</sub>}依测度收敛于f(x)，并且条件放宽之后的定义与原定义[定义6]是等价的。
 
-**[定义67 可测函数的积分的定义2']**
-\label{def2_2}
+**[定义7 可测函数的积分的定义2']**  
 设f(x)为广义实值可测函数，如果存在一个可积简单函数序列{f<sub>n</sub>}满足如下性质   
 ![](http://latex.codecogs.com/gif.latex?\text{(a)}\{f_n\}\text{%20is%20a%20Cauchy%20sequence%20in%20the%20mean})   
 ![](http://latex.codecogs.com/gif.latex?\text{(b')}{f_{n}}\text{%20converges%20in%20measure%20to%20}f(x))    
 则称f(x)可积
 
 
-
-\end{definition}
-
-
-\cite{de1}中采用了定义\ref{def3}，其通用性更强，仅仅要求简单函数小于等于$f(x)$即可。
+\cite{de1}中采用了定义\ref{def3}，其通用性更强，仅仅要求简单函数小于等于f(x)即可。
 
 
-\begin{definition}[可测函数的积分的定义3]
-\label{def3}
-设$f(x)$为定义在E上的可测函数，则f(x)在E上的积分定义为
-\begin{equation}
- \int_{E}f(x)dx=\sup_{h(x)<=f(x)}\left\{ \int_{E}h(x):h(x)\text{是E上的简单函数}\right\}\nonumber
-\end{equation}
-\end{definition}
-
+**[定义8 可测函数的积分的定义3]**   
+设f(x)为定义在E上的可测函数，则f(x)在E上的积分定义为    
+![](http://latex.codecogs.com/gif.latex?\int_{E}f(x)dx=\sup_{h(x)<=f(x)}\left\{\int_{E}h(x):h(x)\text{%20is%20a%20simple%20function}\right\}) 
 
 
 三个定义虽然形式不太一样，但是在本质上都是等价的。相对而言，定义\ref{def1}和定义\ref{def3}类似于Riemann积分的定义，因此比较容易理解。因为定义不同，会造成推导Lebesgue积分的基本性质会有很大的不同。
