@@ -42,14 +42,12 @@ Lebesgue积分的三种定义方式
 
 
 
-定义\ref{def1}来自于\cite{de3}，其基于可测函数$f(x)$,分别构造了两个特殊的和具体的简单函数序列
-\begin{equation}
-h_{\lambda}(x)=\sum_{k=0}^{n-1} y_k\chi_{e_k}(x), g_{\lambda}(x)=\sum_{k=0}^{n-1} y_{k+1}\chi_{e_k}(x))\nonumber
-\end{equation}
-显然
-\begin{equation}
-h_{\lambda}(x)\le f(x)\le g_{\lambda}(x)\nonumber
-\end{equation}
+[定义4]来自于\cite{de3}，其基于可测函数f(x),分别构造了两个特殊的和具体的简单函数序列   
+![](http://latex.codecogs.com/gif.latex?h_{\lambda}(x)=\sum_{k=0}^{n-1}y_k\chi_{e_k}(x)\text{,%20}g_{\lambda}(x)=\sum_{k=0}^{n-1}y_{k+1}\chi_{e_k}(x)))   
+显然   
+![](http://latex.codecogs.com/gif.latex?h_{\lambda}(x)\le\text{%20}f(x)\le\text{%20}g_{\lambda}(x)) 
+
+
 Lebesgue小和s和大和S分别对应简单函数$h_{\lambda}$和$g_{\lambda}(x)$的Lebesgue积分。随着在原有的值域区间$A=y_0<y_1<\dots<y_n=B$中插入更多的分点，$\lambda$逐渐减小，并且随之$h_{\lambda}$递增，而$g_{\lambda}(x)$递减，即通过两个简单函数序列分别从上下方向夹逼函数$f(x)$。如果$f(x)$的积分存在，则满足
 \begin{equation}
 \lim_{\lambda\rightarrow 0}h_{\lambda}(x)= \int_{E}f(x)dx=\lim_{\lambda\rightarrow 0} g_{\lambda}(x)\nonumber
