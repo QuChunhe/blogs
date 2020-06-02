@@ -46,22 +46,16 @@ Lebesgue积分的三种定义方式
 ![](http://latex.codecogs.com/gif.latex?h_{\lambda}(x)=\sum_{k=0}^{n-1}y_k\chi_{e_k}(x)\text{,%20}g_{\lambda}(x)=\sum_{k=0}^{n-1}y_{k+1}\chi_{e_k}(x))  
 显然![](http://latex.codecogs.com/gif.latex?h_{\lambda}(x)\le\text{%20}f(x)\le\text{%20}g_{\lambda}(x)) 
 
-Lebesgue小和s和大和S分别对应简单函数h<sub>λ</sub>(x)和g<sub>λ</sub>(x)的Lebesgue积分。随着在原有的值域区间A=y<sub>0</sub><y<sub>1</sub><...<y<sub>n</sub>=B中插入更多的分点，λ逐渐减小，并且随之h<sub>λ</sub>(x)递增，而g<sub>λ</sub>(x)递减，即通过两个简单函数序列分别从上下方向夹逼函数$f(x)$。如果$f(x)$的积分存在，则满足    
+Lebesgue小和s和大和S分别对应简单函数h<sub>λ</sub>(x)和g<sub>λ</sub>(x)的Lebesgue积分。随着在原有的值域区间A=y<sub>0</sub><y<sub>1</sub><...<y<sub>n</sub>=B中插入更多的分点，λ逐渐减小，并且随之h<sub>λ</sub>(x)递增，而g<sub>λ</sub>(x)递减，即通过两个简单函数序列分别从上下方向夹逼函数f(x)。如果f(x)的积分存在，则满足    
 ![](http://latex.codecogs.com/gif.latex?\lim_{\lambda\rightarrow\text{%20}0}h_{\lambda}(x)=\int_{E}f(x)dx=\lim_{\lambda\rightarrow\text{%20}0}g_{\lambda}(x)) 
-
-
-\lim_{\lambda\rightarrow 0}h_{\lambda}(x)= \int_{E}f(x)dx=\lim_{\lambda\rightarrow 0} g_{\lambda}(x)\nonumber
-
 
 下面将要介绍的定义\ref{def2_1}是在\cite{de2}中采用的定义，其没有构造特殊的、简单函数序列，而是通过满足特定条件的、抽象的简单函数序列来定义一般可测函数Lebesgue积分。
 
-\begin{definition}[依平均的Cauchy序列(Cauchy sequence in the mean)]
-一个可积简单函数序列${f_n}$，如果满足
-\begin{equation}
- \int|f_n - f_m|dx \rightarrow 0 \text{  当}m,n\rightarrow0\nonumber
-\end{equation}
+**[定义5 依平均的Cauchy序列(Cauchy sequence in the mean)]**   
+一个可积简单函数序列f<sub>n</sub>，如果满足   
+![](http://latex.codecogs.com/gif.latex?\int|f_n-f_m|dx\rightarrow0\text{%20when%20}m,n\rightarrow0)    
 则称之为依平均的Cauchy序列
-\end{definition}
+
 
 
 
