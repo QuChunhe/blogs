@@ -1,26 +1,13 @@
-\documentclass[lang=cn,11pt,a4paper,cite=authoryear]{elegantpaper}
-
-\title{Lebesgue积分的三种定义方式}
-\author{屈春河}
-
-
-\date{2020-05-31}
-
-
-% 本文档命令
-\usepackage{array}
-\newcommand{\ccr}[1]{\makecell{{\color{#1}\rule{1cm}{1cm}}}}
-
-
-\begin{document}
-
-\maketitle
+Lebesgue积分的三种定义方式
+===============================
+屈春河
+--------
 
 在Riemann积分的定义中阶梯函数扮演了关键角色，即通过阶梯函数的积分（阶梯函数所围成的各个长方形面积之和）来逐渐逼近一个函数的积分。在Lebesgue积分的定义中，简单函数也扮演了类似于阶梯函数的角色。在\cite{de1}、\cite{de2}和\cite{de3}中分别通过三种方式定义Lebesgue积分，这三种定义都借助于简单函数。
 
 
 
-\begin{definition}[简单函数(Simple Function)]
+##[定义1 简单函数(Simple Function)]##   
 设$f(x)$是定义在$E$上的简单函数，则$f(x)$可以表示为
 \begin{equation}
  f(x)=\sum_{i=1}^{n}\alpha_{i}\chi_{E_i}(x)\nonumber
