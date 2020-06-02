@@ -58,7 +58,6 @@ Lebesgue小和s和大和S分别对应简单函数h<sub>λ</sub>(x)和g<sub>λ</s
 
 
 
-
 \begin{definition}[可测函数的积分的定义2]
 \label{def2_1}
 设$f(x)$为广义实值可测函数，如果存在一个可积简单函数序列$\{f_n\}$满足如下性质
