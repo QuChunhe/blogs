@@ -64,15 +64,12 @@ Lebesgue小和s和大和S分别对应简单函数h<sub>λ</sub>(x)和g<sub>λ</s
 则称f(x)可积，其积分记为    
 ![](http://latex.codecogs.com/gif.latex?\int_{E}f(x)dx=\lim_{n\to+\infty}\int_{E}f_{n}(x))   
 
-\begin{equation}
-\int_{E}f(x)dx=\lim_{n\to +\infty}\int_E f_{n}(x)\nonumber
-\end{equation}
-\end{definition}
 
+显然，在[定义4]中的简单函数序列{h<sub>λ</sub>(x)}和{g<sub>λ</sub>(x)}满足在[定义6]中的条件(a)和(b)。因此，相比于[定义4]，[定义6]更具一般性。然而，为了确保[定义6]是良好定义的，需要证明如下定理。
+**[定理1]**   
+如果两个函数序列{g<sub>n</sub>}和{h<sub>n</sub>}分别满足定义的条件(a)和(b)，那么   
+![](http://latex.codecogs.com/gif.latex?\lim_{n\to+\infty}\int%20h_n(x)dx=\lim_{n\to+\infty}\int%20g_n(x)dx) 
 
-显然，在定义\ref{def1}中的简单函数序列$h_{\lambda}$和$g_{\lambda}(x)$满足在定义\ref{def2_1}中的条件(a)和(b)。因此，相比于定义\ref{def1}，定义\ref{def2_1}更具一般性。然而，为了确保\ref{def2_1}是良好定义的，需要证明如下定理。
-\begin{theorem}[]
-如果两个函数序列$\{g_n\}$和$\{h_n\}$分别满足定义的条件(a)和(b)，那么
 \begin{equation}
  \lim_{n\to +\infty}\int h_n(x)dx = \lim_{n\to +\infty}\int g_n(x)dx\nonumber
 \end{equation}
