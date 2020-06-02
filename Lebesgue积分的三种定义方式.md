@@ -10,7 +10,7 @@ Lebesgue积分的三种定义方式
 **[定义1 简单函数(Simple Function)]**   
 设f(x)是定义在E上的简单函数，则f(x)可以表示为   
 ![](http://latex.codecogs.com/gif.latex?f(x)=\sum_{i=1}^{n}\alpha_{i}\chi_{E_i}(x))   
-其中E<sub>i</sub>是可测集合并满足   
+其中，E<sub>i</sub>是可测集合并满足   
 ![](http://latex.codecogs.com/gif.latex?\bigcup_{i=1}^{n}E_i=E\text{,%20}E_i\cap%20E_j=\varnothing\text{%20}(i\neq%20j))   
 ![](http://latex.codecogs.com/gif.latex?\chi_{E_i}(x))
 为定义在集合 E<sub>i</sub>上的指示函数。
@@ -18,12 +18,10 @@ Lebesgue积分的三种定义方式
 
 阶梯函数的定义域E划分为有限个两两不相交的区间E<sub>1</sub>,E<sub>2</sub>,...,E<sub>n</sub>，并且在每个区间E<sub>i</sub>上的定义为常数α<sub>i</sub>。不同于阶梯函数，简单函数的定义域E可以划分为有限个两两不相交的可测集合$E_1,E_2,\dots,E_n $,并且在每个可测集合$E_i$的定义为常数$\alpha_{i}$。
 
-\begin{definition}[简单函数的积分]
-设$(X,\Omega ,\mu)$为可测空间，$f(x)$为一个可测简单函数，则$f(x)$的积分定义为
-\begin{equation}
- \int_{E}f(x)=\sum_{i=1}^{n}\alpha_{i}\mu(E_i)\nonumber
-\end{equation}
-\end{definition}
+**[定义2 简单函数的积分]** 
+设(X, Ω, μ)$为可测空间，f(x)为一个可测简单函数，则f(x)的积分定义为
+![](http://latex.codecogs.com/gif.latex?\int_{E}f(x)=\sum_{i=1}^{n}\alpha_{i}\mu(E_i)) 
+
 
 如果简单函数$f(x)$的积分存在，即如果存在可测集合$E_i$使得$\mu(E_i)=\infty$,则在此集合上的取值$\alpha_{i}=0$,那么称$f(x)$是可积的或者称$f(x)$是一个可积的简单函数。
 
