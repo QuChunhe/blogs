@@ -13,7 +13,7 @@ Lebesgue积分的三种定义方式
 
 其中E<sub>i</sub>是可测集合并满足<img src="http://latex.codecogs.com/gif.latex?\bigcup_{i=1}^{n}E_i=E, E_i\cap E_j=\varnothing (i\neq j)" />
 
-![](http://latex.codecogs.com/gif.latex?\bigcup_{i=1}^{n}E_i=E, E_i\cap E_j=\varnothing (i\neq j))
+![](http://latex.codecogs.com/gif.latex?\bigcup_{i=1}^{n}E_i=E and E_i\cap E_j=\varnothing (i\neq j))
 $ $, $\chi_{E_i}(x)$为定义在集合 $E_i$上的指示函数。
 \end{definition}
 
