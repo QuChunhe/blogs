@@ -77,13 +77,10 @@ Lebesgue小和s和大和S分别对应简单函数h<sub>λ</sub>(x)和g<sub>λ</s
 \label{def2_2}
 设f(x)为广义实值可测函数，如果存在一个可积简单函数序列{f<sub>n</sub>}满足如下性质   
 ![](http://latex.codecogs.com/gif.latex?\text{(a)}\{f_n\}\text{%20is%20a%20Cauchy%20sequence%20in%20the%20mean})   
-![](http://latex.codecogs.com/gif.latex?\text{(b)}\{f_{n}\}\text{%20converges%20in%20measure%20to%20}f(x))    
+![](http://latex.codecogs.com/gif.latex?\text{(b')}{f_{n}}\text{%20converges%20in%20measure%20to%20}f(x))    
 则称f(x)可积
 
-\begin{flalign}
-&\text{(a) }\{f_n\}\text{为依平均的Cauchy序列} \\
-&\text{(b') }\{f_n\}\text{依测度收敛于}f(x)\nonumber
-\end{flalign}
+
 
 \end{definition}
 
