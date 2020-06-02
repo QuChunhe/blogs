@@ -37,7 +37,8 @@ Lebesgue积分的三种定义方式
 **[定义4 可测函数的积分的定义1]**   
 设f(x)为可测函数,s和S分别为其Lebesgue小和和大和，令   
 ![](http://latex.codecogs.com/gif.latex?U=sup{s}\text{,%20}V=inf{S})
-当![](http://latex.codecogs.com/gif.latex?\lambda=max(y_{i+1}-y_k)\rightarrow0) 时，如果U=V，则称f(x)在E上可积，记为    ![](http://latex.codecogs.com/gif.latex?\int_{E}f(x)dx=U(\text{or}V)\) 
+当   
+![](http://latex.codecogs.com/gif.latex?\lambda=max(y_{i+1}-y_k)\rightarrow0) 时，如果U=V，则称f(x)在E上可积，记为    ![](http://latex.codecogs.com/gif.latex?\int_{E}f(x)dx=U(\text{or}V)) 
 
 
 
