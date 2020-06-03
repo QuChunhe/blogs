@@ -36,13 +36,13 @@ Lebesgue积分的三种定义方式
 **[定义4 可测函数的积分的定义1]**   
 设f(x)为可测函数,s和S分别为其Lebesgue小和和大和，令   
 ![](http://latex.codecogs.com/gif.latex?U=sup\{s\}\text{,%20}V=inf\{S\})   
-当![](http://latex.codecogs.com/gif.latex?\lambda=max(y_{i+1}-y_k)\rightarrow0) 时，如果U=V，则称f(x)在E上可积，记为   
+当![](http://latex.codecogs.com/gif.latex?\lambda=max(y_{i+1}-y_{k})\rightarrow0) 时，如果U=V，则称f(x)在E上可积，记为   
 ![](http://latex.codecogs.com/gif.latex?\int_{E}f(x)dx=U(\text{or}V)) 
 
 
 
 [定义4]来自于[3]，其基于可测函数f(x),分别构造了两个特殊的和具体的简单函数序列   
-![](http://latex.codecogs.com/gif.latex?h_{\lambda}(x)=\sum_{k=0}^{n-1}y_k\chi_{e_k}(x)\text{,%20}g_{\lambda}(x)=\sum_{k=0}^{n-1}y_{k+1}\chi_{e_k}(x))  
+![](http://latex.codecogs.com/gif.latex?h_{\lambda}(x)=\sum_{k=0}^{n-1}y_{k}\chi_{e_k}(x)\text{,%20}g_{\lambda}(x)=\sum_{k=0}^{n-1}y_{k+1}\chi_{e_{k}}(x))  
 显然![](http://latex.codecogs.com/gif.latex?h_{\lambda}(x)\le\text{%20}f(x)\le\text{%20}g_{\lambda}(x)) 
 
 Lebesgue小和s和大和S分别对应简单函数h<sub>λ</sub>(x)和g<sub>λ</sub>(x)的Lebesgue积分。随着在原有的值域区间A=y<sub>0</sub><y<sub>1</sub><...<y<sub>n</sub>=B中插入更多的分点，λ逐渐减小，并且随之h<sub>λ</sub>(x)递增，而g<sub>λ</sub>(x)递减，即通过两个简单函数序列分别从上下方向夹逼函数f(x)。如果f(x)的积分存在，则满足    
