@@ -29,7 +29,7 @@ Lebesgue积分的三种定义方式
 ![](http://latex.codecogs.com/gif.latex?A=y_{0}<y_{1}<\dots<y_{n}=B)   
 令![](http://latex.codecogs.com/gif.latex?e_k=\\{x:x\in%20E%20\text{%20and%20}y_{k}\le%20f(x)<y_{k+1}\\})  
 则Lebesgue小和s和大和S分别定义为    
-![](http://latex.codecogs.com/gif.latex?s=\sum_{k=0}^{n-1}y_{k}\mu(e_{k})\text{,%20}S=\sum_{k=0}^{n-1}y_{k+1}\mu(e_{k}))    
+![](http://latex.codecogs.com/gif.latex?s=\sum_{k=0}^{n-1}y_{k}\mu(e_{k})\text{,%20}S=\sum_{k=0}^{n-1}y_{k+1}\mu(e_{k})    
 其中μ(e<sub>k</sub>)表示可测集合e<sub>k</sub>的测度。
 
 
