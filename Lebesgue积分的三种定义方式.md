@@ -2,7 +2,7 @@ Lebesgue积分的三种定义方式
 ===============================
 屈春河
 --------
-[PDF格式下载]https://github.com/QuChunhe/blogs/raw/master/files/2020-05-31_Three_Definition_of_the_Lebesgue_Integral.pdf)
+[PDF格式下载](https://github.com/QuChunhe/blogs/raw/master/files/2020-05-31_Three_Definition_of_the_Lebesgue_Integral.pdf)
 
 在Riemann积分的定义中阶梯函数扮演了关键角色，即通过阶梯函数的积分（阶梯函数所围成的各个长方形面积之和）来逐渐逼近一个函数的积分。在Lebesgue积分的定义中，简单函数也扮演了类似于阶梯函数的角色。在[1]、[2]和[3]中分别通过三种方式定义Lebesgue积分，这三种定义都借助于简单函数。
 
