@@ -4,6 +4,9 @@
 屈春河
 --------
 
+[pdf下载](https://github.com/QuChunhe/blogs/raw/master/files/2020-05-25_Concurrency_vs_Parallelism.pdf)
+
+
 顾名思义，并发是同时发生，并行就是同时执行。在中文中，并发的字面意思指的是线程同时开始执行这个事件，也就是说后续的执行是串行，还是并行，不确定，依赖于底层的硬件条件和操作系统的调度，而并行则指的是线程同时执行这个过程。
 
 在英文中，con意为“一起,”(with, together)，而cur表示“跑”(run)的意思，因此两者合起来Concurrency就是同时开始跑，即同时发生的意思。在parallelism可以拆分为par+all（=other)，其中par意为并列或者肩并肩(side by side），合起来表示相互不同的多个东西并列存在。
