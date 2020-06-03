@@ -87,7 +87,8 @@ Lebesgue小和s和大和S分别对应简单函数h<sub>λ</sub>(x)和g<sub>λ</s
 ![](http://latex.codecogs.com/gif.latex?\\int_{E}f(x)dx=\sup_{h(x)<=f(x)}\left\\{\int_{E}h(x):h(x)\text{%20is%20a%20simple%20function}\right\\}) 
 
 
-三个定义虽然形式不太一样，但是在本质上都是等价的。相对而言，[定义4]和定义[定义8]类似于Riemann积分的定义，因此比较容易理解。因为定义不同，会造成推导Lebesgue积分的基本性质会有很大的不同。
+三个定义虽然形式不太一样，但是在本质上都是等价的。相对而言，[定义4]和定义[定义8]类似于Riemann积分的定义，因此比较容易理解。虽然三个定义是等价的，但是定义方式不同会造成推导Lebesgue积分的基本性质会有很大的差异。
+
 
 
 
