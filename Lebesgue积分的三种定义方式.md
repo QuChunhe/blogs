@@ -3,8 +3,7 @@ Lebesgue积分的三种定义方式
 屈春河
 --------
 
-在Riemann积分的定义中阶梯函数扮演了关键角色，即通过阶梯函数的积分（阶梯函数所围成的各个长方形面积之和）来逐渐逼近一个函数的积分。在Lebesgue积分的定义中，简单函数也扮演了类似于阶梯函数的角色。在\cite{de1}、\cite{de2}和\cite{de3}中分别通过三种方式定义Lebesgue积分，这三种定义都借助于简单函数。
-
+在Riemann积分的定义中阶梯函数扮演了关键角色，即通过阶梯函数的积分（阶梯函数所围成的各个长方形面积之和）来逐渐逼近一个函数的积分。在Lebesgue积分的定义中，简单函数也扮演了类似于阶梯函数的角色。在[1]、[2]和3]中分别通过三种方式定义Lebesgue积分，这三种定义都借助于简单函数。
 
 
 **[定义1 简单函数(Simple Function)]**   
@@ -42,14 +41,14 @@ Lebesgue积分的三种定义方式
 
 
 
-[定义4]来自于\cite{de3}，其基于可测函数f(x),分别构造了两个特殊的和具体的简单函数序列   
+[定义4]来自于[3]，其基于可测函数f(x),分别构造了两个特殊的和具体的简单函数序列   
 ![](http://latex.codecogs.com/gif.latex?h_{\lambda}(x)=\sum_{k=0}^{n-1}y_k\chi_{e_k}(x)\text{,%20}g_{\lambda}(x)=\sum_{k=0}^{n-1}y_{k+1}\chi_{e_k}(x))  
 显然![](http://latex.codecogs.com/gif.latex?h_{\lambda}(x)\le\text{%20}f(x)\le\text{%20}g_{\lambda}(x)) 
 
 Lebesgue小和s和大和S分别对应简单函数h<sub>λ</sub>(x)和g<sub>λ</sub>(x)的Lebesgue积分。随着在原有的值域区间A=y<sub>0</sub><y<sub>1</sub><...<y<sub>n</sub>=B中插入更多的分点，λ逐渐减小，并且随之h<sub>λ</sub>(x)递增，而g<sub>λ</sub>(x)递减，即通过两个简单函数序列分别从上下方向夹逼函数f(x)。如果f(x)的积分存在，则满足    
 ![](http://latex.codecogs.com/gif.latex?\lim_{\lambda\rightarrow\text{%20}0}h_{\lambda}(x)=\int_{E}f(x)dx=\lim_{\lambda\rightarrow\text{%20}0}g_{\lambda}(x)) 
 
-下面将要介绍的定义\ref{def2_1}是在\cite{de2}中采用的定义，其没有构造特殊的、简单函数序列，而是通过满足特定条件的、抽象的简单函数序列来定义一般可测函数Lebesgue积分。
+下面将要介绍的[定义6]是在[2]中采用的定义，其没有构造特殊的、简单函数序列，而是通过满足特定条件的、抽象的简单函数序列来定义一般可测函数Lebesgue积分。
 
 **[定义5 依平均的Cauchy序列(Cauchy sequence in the mean)]**   
 一个可积简单函数序列f<sub>n</sub>，如果满足   
@@ -80,7 +79,7 @@ Lebesgue小和s和大和S分别对应简单函数h<sub>λ</sub>(x)和g<sub>λ</s
 则称f(x)可积
 
 
-\cite{de1}中采用了定义\ref{def3}，其通用性更强，仅仅要求简单函数小于等于f(x)即可。
+[1]中采用了[定义8]，其通用性更强，仅仅要求简单函数小于等于f(x)即可。
 
 
 **[定义8 可测函数的积分的定义3]**   
@@ -92,5 +91,12 @@ Lebesgue小和s和大和S分别对应简单函数h<sub>λ</sub>(x)和g<sub>λ</s
 
 
 
+# 参考
+
+[1] 周民强, 实变函数论(第三版), 北京大学出版社, 2016.
+
+[2] Avner Friedman, Foundations of Modern Analysis,Dover Publications, 2010.
+
+[3] 那汤松, 实变函数论(第5版), 高等教育出版社, 2009.
 
 
