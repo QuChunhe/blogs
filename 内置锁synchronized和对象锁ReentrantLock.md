@@ -198,20 +198,18 @@ public class ArrayBlockingQueue<E> extends AbstractQueue<E>
 
 
 除了上面两个方面，还有一个特别需要关注的话题，即在发送信号时，是采用signal，还是采用signalAll？这两种方式各有不足之处
-\begin{itemize}
-  \item notify方法仅仅唤醒一个等待线程。如果存在多个等待线程的话，除了被唤醒的一个线程外，其他线程还会处于等待状态。一旦处理不当，就可能造成等待线程永远处于等待状态。例如在之前的ArrayBlockingQueue例子中，如果新增putAll(Collection<E> c)方法，则在该方法内要么调用c.size()次signal方法，要么调用signalAll方法。否则，如果仅仅调用一次signal方法，那么当存在多个线程被阻塞在take方法时，仅仅有一个线程会被唤醒并从队列中成功取出一个元素，虽然此时队列非空，但是其他调用take方法的线程还会一直处于等待状态。
-  \item notifyAll方法会唤醒所有等待的线程。如果所依赖的条件仅仅许可一个线程执行，即线程在执行后会改变条件，使得后续被唤醒的线程所依赖的条件得不到满足，那么虽然所有的线程都会被notifyAll陆续唤醒，但是仅仅有一个线程能够成功运行，其他线程在唤醒并检查条件不满足后，还会继续等待。当等待的线程数较多时，大量线程被唤醒然后又立刻停止运行，会引起频繁的上下文切换，导致严重的性能损失。
-\end{itemize}
+* notify方法仅仅唤醒一个等待线程。如果存在多个等待线程的话，除了被唤醒的一个线程外，其他线程还会处于等待状态。一旦处理不当，就可能造成等待线程永远处于等待状态。例如在之前的ArrayBlockingQueue例子中，如果新增putAll(Collection<E> c)方法，则在该方法内要么调用c.size()次signal方法，要么调用signalAll方法。否则，如果仅仅调用一次signal方法，那么当存在多个线程被阻塞在take方法时，仅仅有一个线程会被唤醒并从队列中成功取出一个元素，虽然此时队列非空，但是其他调用take方法的线程还会一直处于等待状态。
+* notifyAll方法会唤醒所有等待的线程。如果所依赖的条件仅仅许可一个线程执行，即线程在执行后会改变条件，使得后续被唤醒的线程所依赖的条件得不到满足，那么虽然所有的线程都会被notifyAll陆续唤醒，但是仅仅有一个线程能够成功运行，其他线程在唤醒并检查条件不满足后，还会继续等待。当等待的线程数较多时，大量线程被唤醒然后又立刻停止运行，会引起频繁的上下文切换，导致严重的性能损失。
+}
 针对两种方式的不足之处，建议要针对不同情况，选择notify或notifyAll。如果条件仅仅许可一个线程执行，比如仅仅有一个可用的资源或者向ArrayBlockingQueue添加(put)一个元素，那么采用notfiy。反之，如果改变条件后许可多个线程执行，比如消费者生成多个数据或者任务，那么就采用notifyAll。
 
 
-
-\section{复杂场景举例}
+# 复杂场景举例
 
 接下来将会介绍几个使用ReentrantLock的例子，目的是抛砖引玉，演示如何在复杂场景中使用ReentrantLock的方法。需要声明的是这些代码示例忽略了很多实现细节和必要功能，在实际系统中实现这些例子往往需要大量的相关代码和相关功能。
 
 在如下代码示例1中，采用tryLock重复尝试请求锁，直到获得锁为止，从而实现类似于忙等待的功能。
-\begin{lstlisting}[framerule=0pt,escapeinside='']
+```java
 public class SharedData {
     private final ReentrantLock lock = new ReentrantLock();
     ...
@@ -227,9 +225,9 @@ public class SharedData {
         ...
     }
 }       
-\end{lstlisting}
+```
 显然，上面的例子仅仅表明通过tryLock可以实现忙等待方式，但并不是一个好的实现。相对于代码示例1，如下采用CAS(Compare and Swap)方式，从忙等待的性能来说可能会更好。
-\begin{lstlisting}[framerule=0pt,escapeinside='']
+```java
 public class SpinLock {
     public SpinLock() {
     }
@@ -251,10 +249,10 @@ public class SpinLock {
         }
     }
 }       
-\end{lstlisting}
+```
 
 tryLock最常用的场景是在没有获得锁的情况，需要要执行不同的业务逻辑，例如在执行很多任务时，如果一个线程在执行一个任务过程中没有获得锁，那么该线程不是进入等待状态，而是继续执行其他任务。下面的代码示例2就演示了这种情况，即通过线程池ThreadPoolExecutor依次执行任务队列中的任务。在处理一个任务的过程中，如果线程没有获得访问资源的许可，那么就将访问资源和后续执行封装为一个新的Runnable任务，插入任务队列的尾部，然后终止此任务的执行并返回，最后此线程会被线程池回收并继续执行任务队列头部的其他任务。
-\begin{lstlisting}[framerule=0pt,escapeinside=``]
+```java
 public class RerunnableTask {
     public void setExecutor(ThreadPoolExecutor executor) {
         this.executor = executor;
@@ -278,20 +276,19 @@ public class RerunnableTask {
     private final ReentrantLock lock = new ReentrantLock();
     private ThreadPoolExecutor executor;
 }       
-\end{lstlisting}
+```
 
 对于单个任务而言，上述方式可能会增加执行时间，但是由于能够充分利用CPU资源，从而在整体上可以提高线程池的任务处理能力。需要说明的是上面的代码示例2仅仅是一个非常简单的演示，在实际系统中还需要很多额外的工作，例如在暂停任务执行时需要保存中间状态或者上下文环境，而在继续执行任务时还需要恢复中间状态或者上下文环境。
 
 
 
 lockInterruptibly方法可以实现可中断的加锁方式，即在等待获取锁的过程中能够接收中断信号，并被从等待状态中唤醒处理此中断信号。如果需要线程在等待获取锁的过程中还能够处理紧急的情况，那么建议采用lockInterruptibly。比如如下两个应用场景
-\begin{itemize}
-  \item 打破死锁状态。在采用lockInterruptibly方式申请锁时，如果检查到两个线程之间产生了死锁，那么可以选择一个死锁线程，向其发送中断信号，将其唤醒并让其释放资源，从而解决死锁问题。
-  \item 优雅退出系统。在接收到通过命令kill发送的终止信号时，程序如果被异常关闭，那么可能出现各种意外状况，比如数据不一致等。为此，需要优雅的关闭系统，即程序在释放资源和记录状态后主动退出运行。
-\end{itemize}
+* 打破死锁状态。在采用lockInterruptibly方式申请锁时，如果检查到两个线程之间产生了死锁，那么可以选择一个死锁线程，向其发送中断信号，将其唤醒并让其释放资源，从而解决死锁问题。
+* 优雅退出系统。在接收到通过命令kill发送的终止信号时，程序如果被异常关闭，那么可能出现各种意外状况，比如数据不一致等。为此，需要优雅的关闭系统，即程序在释放资源和记录状态后主动退出运行。
+
 
 如下的代码示例3是针对优雅退出情况的一个简单实现
-\begin{lstlisting}[framerule=0pt,escapeinside=``]
+```java
 public class StoppableTask {
     private final GoodReentrantLock lock = new GoodReentrantLock();
     private volatile boolean isRunning = true;
@@ -323,9 +320,9 @@ public class StoppableTask {
             owner.interrupt();
     }
 }
-\end{lstlisting}
+```
 在程序启动时，需要注册"TERM"信号和相对应的SignalHandler对象。后者在接收到"TERM"信号后，会逐个调用StoppableTask对象的stop方法，终止其运行。此外，还需要说明的是getOwner和getQueuedThreads在ReentrantLock中为protected方法。为此，创建了一个继承自ReentrantLock的新类GoodReentrantLock，用于将上述两个方法转化为public方法。
-\begin{lstlisting}[framerule=0pt,escapeinside=``]
+```java
 public class GoodReentrantLock extends ReentrantLock {
     public GoodReentrantLock() {
         super();
@@ -345,19 +342,17 @@ public class GoodReentrantLock extends ReentrantLock {
         return super.getQueuedThreads();
     }
 }
-\end{lstlisting}
+```
 
 
 在代码示例3中针对锁的持有线程，执行了中断操作，用于终止其运行。除了上面优雅退出的场景，在其他很多场景中也需要锁的持有线程能够尽快终止执行并释放锁，例如
-\begin{itemize}
-  \item 存在优先级更高的线程请求锁，比如一些交互应用或实时应用的线程，需要以抢占方式优先获得锁的使用权。
-  \item 持有锁的线程可能出现运行异常或者错误，例如拥有锁的线程已经执行过长的时间，判断其可能出现异常的网络或者功能调用，需要终止其执行。
-\end{itemize}
+* 存在优先级更高的线程请求锁，比如一些交互应用或实时应用的线程，需要以抢占方式优先获得锁的使用权。
+* 持有锁的线程可能出现运行异常或者错误，例如拥有锁的线程已经执行过长的时间，判断其可能出现异常的网络或者功能调用，需要终止其执行。
+
 通过interrupt终止线程的执行，还需要依赖如下两个条件
-\begin{itemize}
-  \item 临界区没有屏蔽中断信号。 如果在临界区内存在不可中断的调用或者屏蔽了中断信号，那么中断信号可能会被丢弃，持有锁的线程不会接收到中断信号。
-  \item 需要共享的标志和状态，类似于代码示例3中的共享变量isRunning，用于表示是否需要终止运行，以避免被错误中断的情况。
-\end{itemize}
+* 临界区没有屏蔽中断信号。 如果在临界区内存在不可中断的调用或者屏蔽了中断信号，那么中断信号可能会被丢弃，持有锁的线程不会接收到中断信号。
+* 需要共享的标志和状态，类似于代码示例3中的共享变量isRunning，用于表示是否需要终止运行，以避免被错误中断的情况。
+
 如果不满足上述两个条件，那么即使发送了中断信号，也无法使持有锁的线程成功退出。还需要说明的，即使成功发送了中断并且正常接收了中断，持有锁的线程也不一定会立即响应中断信号，可能还需要等待一段时间。
 
 
