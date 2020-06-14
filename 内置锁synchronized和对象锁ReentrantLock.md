@@ -357,8 +357,11 @@ public class GoodReentrantLock extends ReentrantLock {
 
 
 
+# 参考
 
+[1] Bryan Cantrill and Jeff Bonwick, Real-world Concurrency, ACM Queue, October 24, 2008
 
+[2] Oracle,JAVA SE 8 Doc: ReentrantLock, https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/ReentrantLock.html
 
 
 
