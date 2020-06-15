@@ -128,7 +128,7 @@ public class SharedData {
 ```
 由于仅仅支持一个条件，所以采用内置锁实现生产者/消费者模式会非常复杂。
 
-不同于内置锁，ReentrantLock能够非常简单的实现生产者/消费者模式。如下生产者/消费者模式的示例代码来自JDK的ArrayBlockingQueue类，其中省略了一些与锁和条件无关的代码。基于ReentrantLock，在ArrayBlockingQueue内部构造了两个不同的条件notFull(非满)和notEmpty(非空)，用于协同put(生产)和take(消费)操作，以避免队列溢出或者取出空值的异常情况发生。
+不同于内置锁，ReentrantLock能够非常简单地实现生产者/消费者模式。如下生产者/消费者模式的示例代码来自JDK的ArrayBlockingQueue类，其中省略了一些与锁和条件无关的代码。基于ReentrantLock，在ArrayBlockingQueue内部构造了两个不同的条件notFull(非满)和notEmpty(非空)，用于协同put(生产)和take(消费)操作，以避免队列溢出或者取出空值的异常情况发生。
 ```java
 public class ArrayBlockingQueue<E> extends AbstractQueue<E>
         implements BlockingQueue<E>, java.io.Serializable {
