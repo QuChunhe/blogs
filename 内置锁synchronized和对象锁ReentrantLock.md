@@ -183,7 +183,7 @@ public class ArrayBlockingQueue<E> extends AbstractQueue<E>
     }
     ...
     private E dequeue() {
-        ...//`获取队首元素并赋值给x，然后删除队首元素`
+        ...//获取队首元素并赋值给x，然后删除队首元素
         notFull.signal();
         return x;
     }
@@ -268,7 +268,7 @@ public class RerunnableTask {
                 lock.unlock();
             }
         } else {
-            //`将后续执行封装为新任务插入任务队列`
+            //将后续执行封装为新任务插入任务队列
             executor.execute(()->this.accessSharedResource());
             return;
         }
@@ -306,9 +306,9 @@ public class StoppableTask {
            }
        } catch (InterruptedException e) {
            if (isRunning) {
-               ...//`被错误唤醒，需要重新执行`
+               ...//被错误唤醒，需要重新执行
            } else {
-               ...//`关闭资源和记录状态`
+               ...//关闭资源和记录状态
            }
        }
        
