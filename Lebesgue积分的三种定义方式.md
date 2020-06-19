@@ -20,7 +20,7 @@ Lebesgue积分的三种定义方式
 
 **[定义2 简单函数的积分]**   
 设(X, Ω, μ)$为可测空间，f(x)为一个可测简单函数，则f(x)的积分定义为   
-![](http://latex.codecogs.com/gif.latex?\int_{E}f(x)=\sum_{i=1}^{n}\alpha_{i}\mu(E_{i})) 
+![](https://latex.codecogs.com/gif.latex?\int_{E}f(x)=\sum_{i=1}^{n}\alpha_{i}\mu(E_{i})) 
 
 如果简单函数f(x)的积分存在，即如果存在可测集合E<sub>i</sub>使得μ(E<sub>i</sub>)=∞,则在此集合上的取值α<sub>i</sub>=0,那么称f(x)是可积的或者称f(x)是一个可积的简单函数。
 
@@ -44,7 +44,7 @@ Lebesgue积分的三种定义方式
 
 [定义4]来自于[3]，其基于可测函数f(x),分别构造了两个特殊的和具体的简单函数序列   
 ![](https://latex.codecogs.com/gif.latex?h_{\lambda}(x)=\sum_{k=0}^{n-1}y_{k}\chi_{e_k}(x)\text{,%20}g_{\lambda}(x)=\sum_{k=0}^{n-1}y_{k+1}\chi_{e_{k}}(x))  
-显然![](http://latex.codecogs.com/gif.latex?h_{\lambda}(x)\le\text{%20}f(x)\le\text{%20}g_{\lambda}(x)) 
+显然![](https://latex.codecogs.com/gif.latex?h_{\lambda}(x)\le\text{%20}f(x)\le\text{%20}g_{\lambda}(x)) 
 
 Lebesgue小和s和大和S分别对应简单函数h<sub>λ</sub>(x)和g<sub>λ</sub>(x)的Lebesgue积分。随着在原有的值域区间A=y<sub>0</sub><y<sub>1</sub><...<y<sub>n</sub>=B中插入更多的分点，λ逐渐减小，并且随之h<sub>λ</sub>(x)递增，而g<sub>λ</sub>(x)递减，即通过两个简单函数序列分别从上下方向夹逼函数f(x)。如果f(x)的积分存在，则满足    
 ![](https://latex.codecogs.com/gif.latex?\lim_{\lambda\rightarrow\text{%20}0}h_{\lambda}(x)=\int_{E}f(x)dx=\lim_{\lambda\rightarrow\text{%20}0}g_{\lambda}(x)) 
@@ -62,7 +62,7 @@ Lebesgue小和s和大和S分别对应简单函数h<sub>λ</sub>(x)和g<sub>λ</s
 ![](https://latex.codecogs.com/gif.latex?\text{(a)}\{f_n\}\text{%20is%20a%20Cauchy%20sequence%20in%20the%20mean})   
 ![](https://latex.codecogs.com/gif.latex?\text{(b)}\lim_{n\to+\infty}f_n=f(x)\text{%20a.e})   
 则称f(x)可积，其积分记为    
-![](http://latex.codecogs.com/gif.latex?\int_{E}f(x)dx=\lim_{n\to+\infty}\int_{E}f_{n}(x))   
+![](https://latex.codecogs.com/gif.latex?\int_{E}f(x)dx=\lim_{n\to+\infty}\int_{E}f_{n}(x))   
 
 
 显然，在[定义4]中的简单函数序列{h<sub>λ</sub>(x)}和{g<sub>λ</sub>(x)}满足在[定义6]中的条件(a)和(b)。因此，相比于[定义4]，[定义6]更具一般性。然而，为了确保[定义6]是良好定义的，需要证明如下定理。   
