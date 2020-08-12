@@ -35,7 +35,6 @@
 
 <img src="https://github.com/QuChunhe/blogs/blob/master/pic/2020-06-14_demo-1.png" width="700"  alt="图-1 日志型数据入库示意图" title="图-1 日志型数据入库示意图"/><br/>
 
-![图-1 日志型数据入库示意图](https://github.com/QuChunhe/blogs/blob/master/pic/2020-06-14_demo-1.png) 图-1 日志型数据入库示意图
 
 
 如图1所示，多个Kafka Client以分布方式入库数据，整个入库过程包含如下几个功能步骤：
