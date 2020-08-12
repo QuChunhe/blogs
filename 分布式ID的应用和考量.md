@@ -115,7 +115,7 @@ CREATE TABLE **** (
 <img src="https://github.com/QuChunhe/blogs/blob/master/pic/2020-06-14_demo-2.png" width="1000"  title="图-3 跨数据中心数据同步示意图"/><br/>
 图-3 跨数据中心数据同步示意图
 
-对于AUTO_INCREMENT修饰的自增长主键，MySQL提供了两个系统变量用于支持源和源之间(source-to-source)的复制：auto_increment_increment和auto_increment_offse[5]。上述两个系统变量分别定义了自增长主键的初始值和增加步长。如果在N个数据中心之间同步数据，那么配置auto_increment_offset=N并且针对不同数据中心分别配置auto_increment_increment为1, 2, ..., N。通过上述配置，N个数据库实例中的自增长主键将不会重复。此外，还需要将MySQL系统变量binlog_format配置为row。
+对于AUTO_INCREMENT修饰的自增长主键，MySQL提供了两个系统变量用于支持源和源之间（source-to-source）的复制：auto_increment_increment和auto_increment_offse[5]。上述两个系统变量分别定义了自增长主键的初始值和增加步长。如果在N个数据中心之间同步数据，那么配置auto_increment_offset=N并且针对不同数据中心分别配置auto_increment_increment为1, 2, ..., N。通过上述配置，N个数据库实例中的自增长主键将不会重复。此外，还需要将MySQL系统变量binlog_format配置为row。
 
 
 在图-3中，Binlog监听功能采用Binlog Connector[6]连接MySQL Server，其在本质上充当了MySQL Server的Slave，能够实时地从MySQL Server获取Binlog的插入(INSERT)和更新(UPDATE)日志，并进一步将日志解析和转化为消息，然后将消息插入到特定的Kafka topic。数据写入功能实时地获取Kafka消息，然后将消息转化为对应的SQL语句并依次逐个逐个地执行，从而将数据写入到数据库中。
