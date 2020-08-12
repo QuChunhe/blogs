@@ -9,6 +9,9 @@
 
 **升级是个麻烦事**  [Web浏览](https://github.com/QuChunhe/blogs/blob/master/%E5%8D%87%E7%BA%A7%E6%98%AF%E4%B8%AA%E9%BA%BB%E7%83%A6%E4%BA%8B.md)  [pdf下载](https://github.com/QuChunhe/blogs/raw/master/files/2020-06-17_%E5%8D%87%E7%BA%A7%E6%98%AF%E4%B8%AA%E9%BA%BB%E7%83%A6%E4%BA%8B.pdf)
 
+
+**分布式ID的应用和考量**  [Web浏览](https://github.com/QuChunhe/blogs/blob/master/%E5%88%86%E5%B8%83%E5%BC%8FID%E7%9A%84%E5%BA%94%E7%94%A8%E5%92%8C%E8%80%83%E9%87%8F.md)  [pdf下载](https://github.com/QuChunhe/blogs/raw/master/files/2020-06-14_%E5%88%86%E5%B8%83%E5%BC%8FID%E7%9A%84%E5%BA%94%E7%94%A8%E5%92%8C%E8%80%83%E9%87%8F.pdf)
+
 # 数学
 
 **Lebesgue积分的三种定义方式**  [Web浏览](https://github.com/QuChunhe/blogs/blob/master/Lebesgue%E7%A7%AF%E5%88%86%E7%9A%84%E4%B8%89%E7%A7%8D%E5%AE%9A%E4%B9%89%E6%96%B9%E5%BC%8F.md)  [PDF下载](https://github.com/QuChunhe/blogs/raw/master/files/2020-05-31_Three_Definition_of_the_Lebesgue_Integral.pdf)
@@ -24,3 +27,7 @@
 
 
 **升级是个麻烦事**  [Web浏览](https://github.com/QuChunhe/blogs/blob/master/%E5%8D%87%E7%BA%A7%E6%98%AF%E4%B8%AA%E9%BA%BB%E7%83%A6%E4%BA%8B.md)  [pdf下载](https://github.com/QuChunhe/blogs/raw/master/files/2020-06-17_%E5%8D%87%E7%BA%A7%E6%98%AF%E4%B8%AA%E9%BA%BB%E7%83%A6%E4%BA%8B.pdf)
+
+
+**分布式ID的应用和考量**  [Web浏览](https://github.com/QuChunhe/blogs/blob/master/%E5%88%86%E5%B8%83%E5%BC%8FID%E7%9A%84%E5%BA%94%E7%94%A8%E5%92%8C%E8%80%83%E9%87%8F.md)  [pdf下载](https://github.com/QuChunhe/blogs/raw/master/files/2020-06-14_%E5%88%86%E5%B8%83%E5%BC%8FID%E7%9A%84%E5%BA%94%E7%94%A8%E5%92%8C%E8%80%83%E9%87%8F.pdf)
+
