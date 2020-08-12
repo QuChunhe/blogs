@@ -121,7 +121,7 @@ CREATE TABLE **** (
 在图-3中，Binlog监听功能采用Binlog Connector[6]连接MySQL Server，其在本质上充当了MySQL Server的Slave，能够实时地从MySQL Server获取Binlog的插入(INSERT)和更新(UPDATE)日志，并进一步将日志解析和转化为消息，然后将消息插入到特定的Kafka topic。数据写入功能实时地获取Kafka消息，然后将消息转化为对应的SQL语句并依次逐个逐个地执行，从而将数据写入到数据库中。
 
 为了实现数据同步的正确性，还需要解决如下两个问题
-* 确保操作的时序性。在执行SQL写入数据时，写入操作要按照Binlog中的顺序依次执行。例如，在Binlog中如果操作$op_1$位于操作$op_2$的前面，那么在写入数据库时要确保操作$op_2$开始执行的时间一定不能早于操作$op_1$执行完毕的时间，即只有一个写入操作执行完毕后，才能开始执行后续写入操作。
+* 确保操作的时序性。在执行SQL写入数据时，写入操作要按照Binlog中的顺序依次执行。例如，在Binlog中如果操作op<sub>1</sub>位于操作op<sub>2</sub>的前面，那么在写入数据库时要确保操作op<sub>2</sub>开始执行的时间一定不能早于操作op<sub>1</sub>执行完毕的时间，即只有一个写入操作执行完毕后，才能开始执行后续写入操作。
 * 避免操作循环同步。根据写入操作的来源，可以将写入操作划分为两类，一类是来自本地应用的本地操作，另一类是来自于Kafka消息的异地操作。MySQL Server无法区分上述两类操作，因此这两类都会被写入Binlog。如果Binlog监听功能不加区分，这些异地操就会再次被同步到其他数据库中心，造成写入操作消息在数据中心之间来回往返的传递，甚至形成操作消息风暴。
 
 
@@ -134,7 +134,7 @@ CREATE TABLE **** (
 
 对操作循环同步问题，则采用基于Guava Cache的过滤功能，过滤掉异地操作。在执行SQL语句插入数据之前，需要将操作缓存到Cache中。如果为INSERT操作，则Cache key为依照字典排序的主键，例如主键分别为k1,k2,...,kn，对应的key则为k1=v1\&k2=v2\&...kn=vn，而对应的Cache value则为AtomicInteger(1)。如果为UPDATE操作，则Cache key可以分为两个部分，前一部分是依照字典排序的主键，后一部分是依照字典排序的更新列，例如主键分别为k1,k2,...,kn，更新的列分别为c1,c2,...,cm，对应的key则为k1=v1\&k2=v2\&...\&kn=vn\&c1=w1\&c2=w2\&...cm=wm，而对应的Cahce value取值，还需要判断Cache中是否已经存在此key：如果key不存在，则value直接设置为AtomicInteger(1)；否则将Cache中已经缓存的value加1。Binlog监听功能在获得写入操作（MySQL写入事件）后，需要根据上述规则获得对应的Cache key，并且判断key在Cache中是否存在：如果不存在，则对应的操作为本地操作，需要发送到Kafka消息队列；如果存在，则将对应的value减1，然后判断value是否为0，如果为0，则将此key/value对从Cache中删除。
 
-\begin{lstlisting}[framerule=0pt,escapeinside=``]
+```java
     public void initialize() {
         Cache<String, AtomicInteger>
                  factory = CacheBuilder.newBuilder()
@@ -178,10 +178,10 @@ CREATE TABLE **** (
 
     private ConcurrentMap<String, AtomicInteger> cache;
     private long expireSecondsAfterWrite = 600; 
-\end{lstlisting}
+```
 
 
-如果各个数据中心所更改的数据集有重合，可以通过补充方案支持一些特殊的情况。补充方案1：将有重合的更改操作集中到一个数据中心，并以服务的形式向外提供更改功能；其他数据中心的应用或者通过基于Web Service的同步调用或者通过基于消息队列的异步调用来请求此服务。补充方案1的问题是时延非常大，如果应用需要及时地获得更新数据，以执行后续操作，那么补充方案1就无法满足。因为我们的业务场景更加特殊，仅仅有一个表（为了方便起见，表名称为resource）的数据需要同时更改，即需要更新这个表的对应列，关联和去关联其他表的，实现类似于资源分配和回收的功能。为此，我们设计了补充方案2，其采用预先分配方式，支持上述功能：由manager角色从可用的资源中提前分配一定数量的资源给业务人员，即在表resource中从member\_id列为0的行中选择一定数量的行并将member\_id列设置为给定的member\_id；在各个数据中心中应用根据业务人员的member\_id从表resource中选择已经分配给此业务人员的资源，关联或去关联特定表，从而实现了操作数据集的不重合。
+如果各个数据中心所更改的数据集有重合，可以通过补充方案支持一些特殊的情况。补充方案1：将有重合的更改操作集中到一个数据中心，并以服务的形式向外提供更改功能；其他数据中心的应用或者通过基于Web Service的同步调用或者通过基于消息队列的异步调用来请求此服务。补充方案1的问题是时延非常大，如果应用需要及时地获得更新数据，以执行后续操作，那么补充方案1就无法满足。因为我们的业务场景更加特殊，仅仅有一个表（为了方便起见，表名称为resource）的数据需要同时更改，即需要更新这个表的对应列，关联和去关联其他表的，实现类似于资源分配和回收的功能。为此，我们设计了补充方案2，其采用预先分配方式，支持上述功能：由manager角色从可用的资源中提前分配一定数量的资源给业务人员，即在表resource中从member_id列为0的行中选择一定数量的行并将member_id列设置为给定的member_id；在各个数据中心中应用根据业务人员的member_id从表resource中选择已经分配给此业务人员的资源，关联或去关联特定表，从而实现了操作数据集的不重合。
 
 
 总而言之，要根据实际情况和业务需求设计方案。没有最好的方案，只有最适合的方案。
@@ -190,9 +190,9 @@ CREATE TABLE **** (
 
 
 
-\section{附录—64位ID生成代码}
+# 附录—64位ID生成代码
 
-\begin{lstlisting}[framerule=0pt,escapeinside=``]
+```java
 package qch.concurrent;
 
 import java.math.BigInteger;
@@ -246,7 +246,7 @@ public class Id {
     private final AtomicInteger autoIncrementId;
     private final Object lock = new Object();
 }
-\end{lstlisting}
+```
 
 # 引用
 [1] AUTO_INCREMENT Handling in InnoDB, https://dev.mysql.com/doc/refman/5.7/en/innodb-auto-increment-handling.html
