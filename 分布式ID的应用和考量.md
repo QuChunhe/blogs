@@ -126,7 +126,7 @@ CREATE TABLE **** (
 
 
 从两个方面来解决操作时序性问题。第一，确保消息在Kafka Server中的存储顺序（offset顺序）与对应操作在Binlog中的顺序相同。为此，采用单
-线程执行Binlog监听功能，并且增加如下配置[7]，以保证Kafka Producer依照顺序发生消息。第二，确保依照消息的存储顺序执行对应的SQL语句。为此，topic的Partition要设置为1，并且数据写入功能采用单线程，即使用一个线程顺序执行如下操作：读取消息，依照消息顺序逐个逐个地解析消息并执行写入操作。
+线程执行Binlog监听功能，并且增加如下配置[7]，以保证Kafka Producer依照顺序发送消息。第二，确保依照消息的存储顺序执行对应的SQL语句。为此，topic的Partition要设置为1，并且数据写入功能采用单线程，即使用一个线程顺序执行如下操作：读取消息，依照消息顺序逐个逐个地解析消息并执行写入操作。
 ```shell
   acks=all
   max.in.flight.requests.per.connection=1 
