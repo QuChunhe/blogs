@@ -6,9 +6,9 @@
 
 
 
-#基础知识
+# 基础知识
 
-在关系型数据库中采用INT类型（32位整数）或者BIGINT类型（64位整数）作为表的主键是一种常见的做法，这种主键也常常被命名为ID（***\_ID）。最为简单的一种ID生成方式是自增长，即在定义表结构时采用关键字AUTO\_INCREMENT[\cite{mysql}]和NOT NULL修饰ID，那么在插入一行数据时，如果ID为空，则数据库会自动采用MAX(ID)+1\footnote{在MySQL中根据innodb\_autoinc\_lock\_mode配置的不同，生成的ID可能并不连续。}作为该行数据的主键。上述ID生成方式虽然简单，但是无法适用于如下的分布式环境
+在关系型数据库中采用INT类型（32位整数）或者BIGINT类型（64位整数）作为表的主键是一种常见的做法，这种主键也常常被命名为ID（***_ID）。最为简单的一种ID生成方式是自增长，即在定义表结构时采用关键字AUTO\_INCREMENT[\cite{mysql}]和NOT NULL修饰ID，那么在插入一行数据时，如果ID为空，则数据库会自动采用MAX(ID)+1\footnote{在MySQL中根据innodb\_autoinc\_lock\_mode配置的不同，生成的ID可能并不连续。}作为该行数据的主键。上述ID生成方式虽然简单，但是无法适用于如下的分布式环境
 \begin{itemize}
   \item 分布式数据库集群，即多个数据库实例以Shared-Nothing方式组成数据库集群。这使得采用AUTO\_INCREMENT方式生成的ID会在不同的数据库中产生重复的ID。
   \item 分布方式插入数据，即存在多个应用相互独立地插入数据。为此，需要一种方案或者机制以确保在不同应用插入数据时每行数据的ID是唯一的。
