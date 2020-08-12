@@ -64,7 +64,7 @@
 * 应用并发度k，即每个应用使用多线程以并发方式处理数据入库操作。Kafka Client在获取数据后采用线程池，以一个线程处理一个消息的方式完成步骤2)到4)的功能，其并发度k约等于线程池的最大可用线程数。
 
 
-上述因素中，m和q根据当前实际情况和未来业务规划进行估算，而a和k的取值则依赖于配置或者部署情况。受限于每秒生成的ID数量，每个应用每秒最多处理2<sup>32-n</sup>个数据。由于应用数量可能少于Kafka Partition数量或者消息在各个Kafka Partition之间可能不平衡，因此需要满足m/a<<2 <sup>32-n</sup>，以留出充足的余量。此外，每个应用每秒最多处理k/t个数据，需要满足a×k/t>q，即2<sup>n</sup>*k/t>q，以确保数据能够及时入库。根据上述两个关系，可以大概估计出n的取值范围为log<sub>2</sub>(q×t/k)<n<<32-log<sub>2</sub>(m/a)。
+上述因素中，m和q根据当前实际情况和未来业务规划进行估算，而a和k的取值则依赖于配置或者部署情况。受限于每秒生成的ID数量，每个应用每秒最多处理2<sup>32-n</sup>个数据。由于应用数量可能少于Kafka Partition数量或者消息在各个Kafka Partition之间可能不平衡，因此需要满足m/a<<2 <sup>32-n</sup>，以留出充足的余量。此外，每个应用每秒最多处理k/t个数据，需要满足a×k/t>q，即2<sup>n</sup>×k/t>q，以确保数据能够及时入库。根据上述两个关系，可以大概估计出n的取值范围为log<sub>2</sub>(q×t/k)<n<<32-log<sub>2</sub>(m/a)。
 
 合理使用数据库分区(Partition)[4]，能够大大地减小查询时间。为了充分发挥分区的性能优势，需要满足如下两个条件：
 * 查询条件中包含分区条件的约束，即根据查询条件就能确定数据所在分区。
@@ -89,42 +89,36 @@ CREATE TABLE **** (
 
 针对于上述的分区，在WHERE查询条件中必需添加ID范围约束，如下SQL实例所示。因为InnoDB对于主键采用聚簇索引，根据主键范围能够非常快速地读取所需数据。因此，通过本方案能够减小不必要的数据扫描，快速地定位到所需数据，从而大大减小了查询所需时间。
 
-\begin{lstlisting}[framerule=0pt,escapeinside=``]
+```sql
   SELECT ..
   FROM ...
   WHERE (id>=(UNIX_TIMESTAMP('2020-08-05 08:00:00')<<32)) AND
         (id< (UNIX_TIMESTAMP('2020-08-06 08:00:00')<<32)) AND 
         ...
-\end{lstlisting}
+```
 
-上述方案的一个潜在问题是32位Unix时间戳的溢出。如果系统需要持续运行数十年的时间，那么ID的前32位将会在格林威治时间2038年01月19日03时14分07秒溢出，即无法用32位无符号整数表示Unix时间戳。为了防止这种情况的发生，可以采用相对Unix时间戳，即ID的前32位保存从近期一个特定时间开始到当前时间的总秒数，例如从格林威治时间2020年1月1日00点00分 00秒到当前的总秒数，其可以方便地通过当前时间的UNIX时间戳减去UNIX\_TIMESTAMP('2020-01-01 00:00:00')得到。
+上述方案的一个潜在问题是32位Unix时间戳的溢出。如果系统需要持续运行数十年的时间，那么ID的前32位将会在格林威治时间2038年01月19日03时14分07秒溢出，即无法用32位无符号整数表示Unix时间戳。为了防止这种情况的发生，可以采用相对Unix时间戳，即ID的前32位保存从近期一个特定时间开始到当前时间的总秒数，例如从格林威治时间2020年1月1日00点00分 00秒到当前的总秒数，其可以方便地通过当前时间的UNIX时间戳减去UNIX_TIMESTAMP('2020-01-01 00:00:00')得到。
 
-\section{例2—跨数据中心数据同步}
+# 例2—跨数据中心数据同步
 
 
 跨数据中心数据同步是针对同时满足如下约束的业务场景。
-\begin{itemize}
-  \item 多个数据中心同时写入数据，即位于不同数据中心的应用都需要向相同的表写入数据。
-  \item 不更改数据或者所更改的数据集互不相交，也就是说，位于不同数据中心的应用即使更改同一个表，但是所更改的数据不同。
-  \item 每个数据中心的应用都需要读取全部数据。
-\end{itemize}
+* 多个数据中心同时写入数据，即位于不同数据中心的应用都需要向相同的表写入数据。
+* 不更改数据或者所更改的数据集互不相交，也就是说，位于不同数据中心的应用即使更改同一个表，但是所更改的数据不同。
+* 每个数据中心的应用都需要读取全部数据。
+
 针对上述业务场景，下文将会介绍一种基于AUTO\_INCREMENT自增长ID和Kafka消息队列的方案。需要说明的是，采用例1所示的ID生成方式也是一种可选方案，其中不同的服务ID对应于不同的数据中心，但是例1中的方案将ID生成推给应用，不仅增加了应用的复杂性，而且有些情况下还难以实现，比如对于PHP应用，难于协同多个PHP进程（请求）生成ID。此外，如果多个数据中心需要更改相同的数据，在一些情况下也能够通过补充方案进行支持，但是无法支持分布式事务。
 
 
-图-\ref{fig:demo-2}所示为在两个数据中心之间同步数据的功能示意图。对于多个数据中心的情况，类似于图-\ref{fig:demo-2}需要每个数据中心对应一个topic。对于一个数据中心而言，其一方面将本地数据中心的数据发送到对应的topic，另一个方面从其他topic获取消息并插入到本地数据库。
+图-3所示为在两个数据中心之间同步数据的功能示意图。对于多个数据中心的情况，类似于图-3需要每个数据中心对应一个topic。对于一个数据中心而言，其一方面将本地数据中心的数据发送到对应的topic，另一个方面从其他topic获取消息并插入到本地数据库。
+
+<img src="https://github.com/QuChunhe/blogs/blob/master/pic/2020-06-14_demo-2.png" width="1000"  title="图-3 跨数据中心数据同步示意图"/><br/>
+图-3 跨数据中心数据同步示意图
+
+对于AUTO_INCREMENT修饰的自增长主键，MySQL提供了两个系统变量用于支持源和源之间(source-to-source)的复制：auto_increment_increment和auto_increment_offse[5]。上述两个系统变量分别定义了自增长主键的初始值和增加步长。如果在N个数据中心之间同步数据，那么配置auto_increment_offset=N并且针对不同数据中心分别配置auto_increment_increment为1, 2, ..., N。通过上述配置，N个数据库实例中的自增长主键将不会重复。此外，还需要将MySQL系统变量binlog_format配置为row。
 
 
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=\textwidth]{2020-06-14_demo-2.png}
-  \caption{跨数据中心数据同步示意图}
-  \label{fig:demo-2}
-\end{figure}
-
-对于AUTO\_INCREMENT修饰的自增长主键，MySQL提供了两个系统变量用于支持源和源之间(source-to-source)的复制：auto\_increment\_increment和auto\_increment\_offse[\cite{autoincrement}]。上述两个系统变量分别定义了自增长主键的初始值和增加步长。如果在N个数据中心之间同步数据，那么配置auto\_increment\_offset=N并且针对不同数据中心分别配置auto\_increment\_increment为1, 2, ..., N。通过上述配置，N个数据库实例中的自增长主键将不会重复。此外，还需要将MySQL系统变量binlog\_format配置为row。
-
-
-在图-\ref{fig:demo-2}中，Binlog监听功能采用Binlog Connector[\cite{binlog2}]连接MySQL Server，其在本质上充当了MySQL Server的Slave，能够实时地从MySQL Server获取Binlog的插入(INSERT)和更新(UPDATE)日志，并进一步将日志解析和转化为消息，然后将消息插入到特定的Kafka topic。数据写入功能实时地获取Kafka消息，然后将消息转化为对应的SQL语句并依次逐个逐个地执行，从而将数据写入到数据库中。
+在图-3中，Binlog监听功能采用Binlog Connector[6]连接MySQL Server，其在本质上充当了MySQL Server的Slave，能够实时地从MySQL Server获取Binlog的插入(INSERT)和更新(UPDATE)日志，并进一步将日志解析和转化为消息，然后将消息插入到特定的Kafka topic。数据写入功能实时地获取Kafka消息，然后将消息转化为对应的SQL语句并依次逐个逐个地执行，从而将数据写入到数据库中。
 
 为了实现数据同步的正确性，还需要解决如下两个问题
 \begin{itemize}
@@ -268,23 +262,11 @@ public class Id {
 
 [4] Partitioning Overview, https://mariadb.com/kb/en/partitioning-overview/
 
-
-@online{binlog2,
-author = {Binlog\_Connector},
-title = {MySQL Binlog Connector Java},
-howpublished = "\url{https://github.com/shyiko/mysql-binlog-connector-java}"
-}
+[5] Auto Increment Variables, https://dev.mysql.com/doc/refman/5.7/en/replication-options-master.html#sysvar_auto_increment_increment
 
 
+[6] MySQL Binlog Connector Java, https://github.com/shyiko/mysql-binlog-connector-java
 
-@online{autoincrement,
-author = {auto\_increment},
-title = {Auto Increment Variables},
-howpublished = "\url{https://dev.mysql.com/doc/refman/5.7/en/replication-options-master.html#sysvar_auto_increment_increment}"
-}
 
-@online{kafka,
-author = {Producer\_Configst},
-title = {Kafka Producer Configs},
-howpublished = "\url{http://kafka.apache.org/documentation/#producerconfigs}"
-}
+[7] Kafka Producer Configs http://kafka.apache.org/documentation/#producerconfigs
+
