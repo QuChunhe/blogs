@@ -51,7 +51,8 @@
 
 如图-2所示，64位ID被划分为三个部分：第一部分，前32位为Unix时间戳，其为从格林威治时间1970年1月1日00点00分00秒到当前的总秒数；第二部分，中间n位代表服务ID，可以根据需要调整n的大小；第三部分，后32-n位为自增长整数，当32-n位整数用尽时会自动归零并且从零开始增加。显然，为不同的应用分配不同的服务ID，可以确保ID不会相同。
 
-![](https://github.com/QuChunhe/blogs/blob/master/pic/2020-06-14_id.png)图2-ID示意图
+<img src="https://github.com/QuChunhe/blogs/blob/master/pic/2020-06-14_id.png" width="800"  title="图-2 ID组成示意图"/><br/>
+图-2 ID组成示意图
 
 \begin{figure}[htbp]
 \label{fig:demo-1-id}
