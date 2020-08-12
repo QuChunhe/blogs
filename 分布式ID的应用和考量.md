@@ -33,7 +33,7 @@
 
 日志型数据指的是那些一旦生成就不会被更改的数据，比如用户访问日志等。这些数据生成之后，会被实时地发送到Kafak集群。根据实际部署情况，Kafka集群可能是一个或者多个，而topic也可能是一个或者多个。需要指出的是如果是一个Kafka集群并且是一个topic，那么需要将topic配置为多个Partition，而Kafka Client则需要采用相同的group.id，从而实现多个Kafka Client以协同方式同时从一个topic获取消息。
 
-<img src="https://github.com/QuChunhe/blogs/blob/master/pic/2020-06-14_demo-1.png" width="700"  alt="图-1 日志型数据入库示意图" title="图-1 日志型数据入库示意图"/><br/>
+<img src="https://github.com/QuChunhe/blogs/blob/master/pic/2020-06-14_demo-1.png" width="700"  title="图-1 日志型数据入库示意图"/><br/>
 
 
 
