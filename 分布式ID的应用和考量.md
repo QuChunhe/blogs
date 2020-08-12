@@ -121,18 +121,16 @@ CREATE TABLE **** (
 在图-3中，Binlog监听功能采用Binlog Connector[6]连接MySQL Server，其在本质上充当了MySQL Server的Slave，能够实时地从MySQL Server获取Binlog的插入(INSERT)和更新(UPDATE)日志，并进一步将日志解析和转化为消息，然后将消息插入到特定的Kafka topic。数据写入功能实时地获取Kafka消息，然后将消息转化为对应的SQL语句并依次逐个逐个地执行，从而将数据写入到数据库中。
 
 为了实现数据同步的正确性，还需要解决如下两个问题
-\begin{itemize}
-  \item 确保操作的时序性。在执行SQL写入数据时，写入操作要按照Binlog中的顺序依次执行。例如，在Binlog中如果操作$op_1$位于操作$op_2$的前面，那么在写入数据库时要确保操作$op_2$开始执行的时间一定不能早于操作$op_1$执行完毕的时间，即只有一个写入操作执行完毕后，才能开始执行后续写入操作。
-  \item 避免操作循环同步。根据写入操作的来源，可以将写入操作划分为两类，一类是来自本地应用的本地操作，另一类是来自于Kafka消息的异地操作。MySQL Server无法区分上述两类操作，因此这两类都会被写入Binlog。如果Binlog监听功能不加区分，这些异地操就会再次被同步到其他数据库中心，造成写入操作消息在数据中心之间来回往返的传递，甚至形成操作消息风暴。
-\end{itemize}
+* 确保操作的时序性。在执行SQL写入数据时，写入操作要按照Binlog中的顺序依次执行。例如，在Binlog中如果操作$op_1$位于操作$op_2$的前面，那么在写入数据库时要确保操作$op_2$开始执行的时间一定不能早于操作$op_1$执行完毕的时间，即只有一个写入操作执行完毕后，才能开始执行后续写入操作。
+* 避免操作循环同步。根据写入操作的来源，可以将写入操作划分为两类，一类是来自本地应用的本地操作，另一类是来自于Kafka消息的异地操作。MySQL Server无法区分上述两类操作，因此这两类都会被写入Binlog。如果Binlog监听功能不加区分，这些异地操就会再次被同步到其他数据库中心，造成写入操作消息在数据中心之间来回往返的传递，甚至形成操作消息风暴。
 
 
 从两个方面来解决操作时序性问题。第一，确保消息在Kafka Server中的存储顺序（offset顺序）与对应操作在Binlog中的顺序相同。为此，采用单
-线程执行Binlog监听功能，并且增加如下配置[\cite{kafka}]，以保证Kafka Producer依照顺序发生消息。第二，确保依照消息的存储顺序执行对应的SQL语句。为此，topic的Partition要设置为1，并且数据写入功能采用单线程，即使用一个线程顺序执行如下操作：读取消息，依照消息顺序逐个逐个地解析消息并执行写入操作。
-\begin{lstlisting}[framerule=0pt,escapeinside=``]
+线程执行Binlog监听功能，并且增加如下配置[7]，以保证Kafka Producer依照顺序发生消息。第二，确保依照消息的存储顺序执行对应的SQL语句。为此，topic的Partition要设置为1，并且数据写入功能采用单线程，即使用一个线程顺序执行如下操作：读取消息，依照消息顺序逐个逐个地解析消息并执行写入操作。
+```shell
   acks=all
   max.in.flight.requests.per.connection=1 
-\end{lstlisting}
+```
 
 对操作循环同步问题，则采用基于Guava Cache的过滤功能，过滤掉异地操作。在执行SQL语句插入数据之前，需要将操作缓存到Cache中。如果为INSERT操作，则Cache key为依照字典排序的主键，例如主键分别为k1,k2,...,kn，对应的key则为k1=v1\&k2=v2\&...kn=vn，而对应的Cache value则为AtomicInteger(1)。如果为UPDATE操作，则Cache key可以分为两个部分，前一部分是依照字典排序的主键，后一部分是依照字典排序的更新列，例如主键分别为k1,k2,...,kn，更新的列分别为c1,c2,...,cm，对应的key则为k1=v1\&k2=v2\&...\&kn=vn\&c1=w1\&c2=w2\&...cm=wm，而对应的Cahce value取值，还需要判断Cache中是否已经存在此key：如果key不存在，则value直接设置为AtomicInteger(1)；否则将Cache中已经缓存的value加1。Binlog监听功能在获得写入操作（MySQL写入事件）后，需要根据上述规则获得对应的Cache key，并且判断key在Cache中是否存在：如果不存在，则对应的操作为本地操作，需要发送到Kafka消息队列；如果存在，则将对应的value减1，然后判断value是否为0，如果为0，则将此key/value对从Cache中删除。
 
@@ -257,7 +255,7 @@ public class Id {
 [2] Spider Server System Variables, https://mariadb.com/kb/ko/spider-server-system-variables/
 
 
-[3] Spider Storage Engine Overview,bhttps://mariadb.com/kb/en/spider-storage-engine-overview/
+[3] Spider Storage Engine Overview,https://mariadb.com/kb/en/spider-storage-engine-overview/
 
 
 [4] Partitioning Overview, https://mariadb.com/kb/en/partitioning-overview/
