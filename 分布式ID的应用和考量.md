@@ -255,7 +255,7 @@ public class Id {
 [2] Spider Server System Variables, https://mariadb.com/kb/ko/spider-server-system-variables/
 
 
-[3] Spider Storage Engine Overview,https://mariadb.com/kb/en/spider-storage-engine-overview/
+[3] Spider Storage Engine Overview, https://mariadb.com/kb/en/spider-storage-engine-overview/
 
 
 [4] Partitioning Overview, https://mariadb.com/kb/en/partitioning-overview/
@@ -266,5 +266,5 @@ public class Id {
 [6] MySQL Binlog Connector Java, https://github.com/shyiko/mysql-binlog-connector-java
 
 
-[7] Kafka Producer Configs http://kafka.apache.org/documentation/#producerconfigs
+[7] Kafka Producer Configs, http://kafka.apache.org/documentation/#producerconfigs
 
