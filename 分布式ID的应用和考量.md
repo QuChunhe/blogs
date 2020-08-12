@@ -8,18 +8,16 @@
 
 # 基础知识
 
-在关系型数据库中采用INT类型（32位整数）或者BIGINT类型（64位整数）作为表的主键是一种常见的做法，这种主键也常常被命名为ID（***_ID）。最为简单的一种ID生成方式是自增长，即在定义表结构时采用关键字AUTO\_INCREMENT[\cite{mysql}]和NOT NULL修饰ID，那么在插入一行数据时，如果ID为空，则数据库会自动采用MAX(ID)+1\footnote{在MySQL中根据innodb\_autoinc\_lock\_mode配置的不同，生成的ID可能并不连续。}作为该行数据的主键。上述ID生成方式虽然简单，但是无法适用于如下的分布式环境
-\begin{itemize}
-  \item 分布式数据库集群，即多个数据库实例以Shared-Nothing方式组成数据库集群。这使得采用AUTO\_INCREMENT方式生成的ID会在不同的数据库中产生重复的ID。
-  \item 分布方式插入数据，即存在多个应用相互独立地插入数据。为此，需要一种方案或者机制以确保在不同应用插入数据时每行数据的ID是唯一的。
-\end{itemize}
+在关系型数据库中采用INT类型（32位整数）或者BIGINT类型（64位整数）作为表的主键是一种常见的做法，这种主键也常常被命名为ID（***_ID）。最为简单的一种ID生成方式是自增长，即在定义表结构时采用关键字AUTO_INCREMENT[1]和NOT NULL修饰ID，那么在插入一行数据时，如果ID为空，则数据库会自动采用MAX(ID)+1(在MySQL中根据innodb_autoinc_lock_mode配置的不同，生成的ID可能并不连续)作为该行数据的主键。上述ID生成方式虽然简单，但是无法适用于如下的分布式环境
+* 分布式数据库集群，即多个数据库实例以Shared-Nothing方式组成数据库集群。这使得采用AUTO_INCREMENT方式生成的ID会在不同的数据库中产生重复的ID。
+* 分布方式插入数据，即存在多个应用相互独立地插入数据。为此，需要一种方案或者机制以确保在不同应用插入数据时每行数据的ID是唯一的。
 
 
-针对于上述分布式环境的ID生成方案也被称为分布式ID生成方案，其实现非常多，归纳起来可以划分如下两大类
-\begin{itemize}
-  \item 集中协调方案，即通过集中式的服务来协调各个应用生成ID或者分配ID，以实现ID的唯一性，例如使用Spider存储引擎，可以设置spider\_auto\_increment\_mode[\cite{spider1}]为1，能够兼容AUTO\_INCREMEN方式实现自增长ID。
-  \item 规则划分方案，即通过特定的规则对于可用ID进行划分，使得每个应用以排他方式占用其中一个划分。最为知名一个例子是Twitter Snowflake方案，其通过中间10个bit的工作机器ID划分ID，使得ID并不会重复。
-\end{itemize}
+
+针对于上述分布式环境的ID生成方案也被称为分布式ID生成方案，其实现非常多，归纳起来可以划分如下两大类：
+* 集中协调方案，即通过集中式的服务来协调各个应用生成ID或者分配ID，以实现ID的唯一性，例如使用Spider存储引擎，可以设置spider_auto_increment_mode[2]为1，能够兼容AUTO_INCREMEN方式实现自增长ID。
+* 规则划分方案，即通过特定的规则对于可用ID进行划分，使得每个应用以排他方式占用其中一个划分。最为知名一个例子是Twitter Snowflake方案，其通过中间10个bit的工作机器ID划分ID，使得ID并不会重复。
+
 在本质上集中协调方案是一种针对分布式环境的集中式ID生成方案，其实现相对简单，但是性能往往不如基于规则划分的分布式方案。
 
 虽然分布式ID生成方案很多，但是在实际应用时需要从如下几个方面评估和选择。
@@ -268,11 +266,41 @@ public class Id {
 }
 \end{lstlisting}
 
-
-\nocite{*}
-\bibliography{2020-06-14_distributed_id}
-
+# 引用
+[1] AUTO_INCREMENT Handling in InnoDB, https://dev.mysql.com/doc/refman/5.7/en/innodb-auto-increment-handling.html
 
 
-\end{document}
+[2] Spider Server System Variables, https://mariadb.com/kb/ko/spider-server-system-variables/
 
+
+@online{spider2,
+author = {Spider\_Overview},
+title = {Spider Storage Engine Overview},
+howpublished = "\url{https://mariadb.com/kb/en/spider-storage-engine-overview/}"
+}
+
+@online{partition,
+author = {Partition},
+title = {Partitioning Overview},
+howpublished = "\url{https://mariadb.com/kb/en/partitioning-overview/}"
+}
+
+@online{binlog2,
+author = {Binlog\_Connector},
+title = {MySQL Binlog Connector Java},
+howpublished = "\url{https://github.com/shyiko/mysql-binlog-connector-java}"
+}
+
+
+
+@online{autoincrement,
+author = {auto\_increment},
+title = {Auto Increment Variables},
+howpublished = "\url{https://dev.mysql.com/doc/refman/5.7/en/replication-options-master.html#sysvar_auto_increment_increment}"
+}
+
+@online{kafka,
+author = {Producer\_Configst},
+title = {Kafka Producer Configs},
+howpublished = "\url{http://kafka.apache.org/documentation/#producerconfigs}"
+}
