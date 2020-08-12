@@ -33,21 +33,15 @@
 
 日志型数据指的是那些一旦生成就不会被更改的数据，比如用户访问日志等。这些数据生成之后，会被实时地发送到Kafak集群。根据实际部署情况，Kafka集群可能是一个或者多个，而topic也可能是一个或者多个。需要指出的是如果是一个Kafka集群并且是一个topic，那么需要将topic配置为多个Partition，而Kafka Client则需要采用相同的group.id，从而实现多个Kafka Client以协同方式同时从一个topic获取消息。
 
+![图-1 日志型数据入库示意图](https://github.com/QuChunhe/blogs/raw/master/pic/2020-06-14_demo-1.png 图-1 日志型数据入库示意图)
 
-\begin{figure}[htbp]
-\label{fig:demo-1}
-  \centering
-  \includegraphics[width=0.75\textwidth]{2020-06-14_demo-1.png}
- \caption{日志型数据入库示意图}
-\end{figure}
 
 如图1所示，多个Kafka Client以分布方式入库数据，整个入库过程包含如下几个功能步骤：
-\begin{enumerate}[label=\arabic*)]
-  \item 数据获取，从Kafka集群读取消息。
-  \item 数据整理。根据业务需求，对于读取的数据进行规范化。
-  \item 数据插入。将规范化后的数据插入一个或者多个日志表中。如果插入多个表，往往采用相同的ID以相互关联。
-  \item 数据汇总。插入/更新不同维度或者不同粒度的汇总表，用以支持相关的统计分析功能。
-\end{enumerate}
+1. 数据获取，从Kafka集群读取消息。
+2. 数据整理。根据业务需求，对于读取的数据进行规范化。
+3. 数据插入。将规范化后的数据插入一个或者多个日志表中。如果插入多个表，往往采用相同的ID以相互关联。
+4. 数据汇总。插入/更新不同维度或者不同粒度的汇总表，用以支持相关的统计分析功能。
+
 分布式ID主要针对于数据插入，即在插入原始日志表时需要生成唯一的ID作为该表的主键。
 
 
