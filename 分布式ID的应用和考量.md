@@ -47,15 +47,17 @@
 分布式ID主要针对于数据插入，即在插入原始日志表时需要生成唯一的ID作为该表的主键。
 
 
-针对此种需求，最为简单的方案是采用Spider引擎[\cite{spider2}]和自增长ID。作为一种集中式ID协调机制，此种方案的实现和使用都非常简单。然而，当数据规模非常庞大时，此种方案的查询效率非常低。一种常见的补充方案是定期地将数据转移到历史表中，例如以年为周期转移到历史表****\_yyyy或者以月为周期转移到历史表****\_yyyy\_mm。通过历史表，虽然能够在一定程度上改善查询效率，却增加了查询的复杂性，需要在查询语句中显示地指定查询哪个历史表，甚至于如果数据分布在多个历史表中，则不仅需要查询多个历史表，而且还要对查询结果进行UNION操作。为了优化数据查询，下文会介绍一种基于Twitter Snowflake的改良方案，并结合分区[\cite{partition}]，从而既可以获得远超自增长ID方案的查询性能，又无需在查询中显示地指定历史表。
+针对此种需求，最为简单的方案是采用Spider引擎[3]和自增长ID。作为一种集中式ID协调机制，此种方案的实现和使用都非常简单。然而，当数据规模非常庞大时，此种方案的查询效率非常低。一种常见的补充方案是定期地将数据转移到历史表中，例如以年为周期转移到历史表****_yyyy或者以月为周期转移到历史表****_yyyy_mm。通过历史表，虽然能够在一定程度上改善查询效率，却增加了查询的复杂性，需要在查询语句中显示地指定查询哪个历史表，甚至于如果数据分布在多个历史表中，则不仅需要查询多个历史表，而且还要对查询结果进行UNION操作。为了优化数据查询，下文会介绍一种基于Twitter Snowflake的改良方案，并结合分区[4]，从而既可以获得远超自增长ID方案的查询性能，又无需在查询中显示地指定历史表。
 
 如图-2所示，64位ID被划分为三个部分：第一部分，前32位为Unix时间戳，其为从格林威治时间1970年1月1日00点00分00秒到当前的总秒数；第二部分，中间n位代表服务ID，可以根据需要调整n的大小；第三部分，后32-n位为自增长整数，当32-n位整数用尽时会自动归零并且从零开始增加。显然，为不同的应用分配不同的服务ID，可以确保ID不会相同。
+
+![](https://github.com/QuChunhe/blogs/blob/master/pic/2020-06-14_id.png)图2-ID示意图
 
 \begin{figure}[htbp]
 \label{fig:demo-1-id}
   \centering
   \includegraphics[width=0.75\textwidth]{2020-06-14_id.png}
-  \caption{ID示意图}
+  \caption{}
 \end{figure}
 
 要根据实际情况，合理选择n的大小。如果n太大，一旦每秒产生的数据量超过$2^{32-n}$，就会造成ID重复。如果n太小，会限制Kafka Client的数量，当入库操作比较耗时并且数据量比较庞大时，会导致数据积压，数据无法及时入库。具体而言，n的取值跟如下几个因素有关：
@@ -267,17 +269,11 @@ public class Id {
 [2] Spider Server System Variables, https://mariadb.com/kb/ko/spider-server-system-variables/
 
 
-@online{spider2,
-author = {Spider\_Overview},
-title = {Spider Storage Engine Overview},
-howpublished = "\url{https://mariadb.com/kb/en/spider-storage-engine-overview/}"
-}
+[3] Spider Storage Engine Overview,bhttps://mariadb.com/kb/en/spider-storage-engine-overview/
 
-@online{partition,
-author = {Partition},
-title = {Partitioning Overview},
-howpublished = "\url{https://mariadb.com/kb/en/partitioning-overview/}"
-}
+
+[4] Partitioning Overview, https://mariadb.com/kb/en/partitioning-overview/
+
 
 @online{binlog2,
 author = {Binlog\_Connector},
