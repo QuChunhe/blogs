@@ -19,17 +19,17 @@
 
 # 并发、并行和分布式系统
 
-**并发(Concurrency)与并行(Parallelism)**  [Web浏览](https://github.com/QuChunhe/blogs/blob/master/Concurrency_vs_Parallelism.md)  [pdf下载](https://github.com/QuChunhe/blogs/raw/master/files/2020-05-25_Concurrency_vs_Parallelism.pdf)
+**分布式ID的应用和考量**  [Web浏览](https://github.com/QuChunhe/blogs/blob/master/%E5%88%86%E5%B8%83%E5%BC%8FID%E7%9A%84%E5%BA%94%E7%94%A8%E5%92%8C%E8%80%83%E9%87%8F.md)  [pdf下载](https://github.com/QuChunhe/blogs/raw/master/files/2020-06-14_%E5%88%86%E5%B8%83%E5%BC%8FID%E7%9A%84%E5%BA%94%E7%94%A8%E5%92%8C%E8%80%83%E9%87%8F.pdf)
 
 **JDK中的内置锁synchronized和对象锁ReentrantLock**  [Web浏览](https://github.com/QuChunhe/blogs/blob/master/%E5%86%85%E7%BD%AE%E9%94%81synchronized%E5%92%8C%E5%AF%B9%E8%B1%A1%E9%94%81ReentrantLock.md)  [pdf下载](https://github.com/QuChunhe/blogs/raw/master/files/2020-06-07_synchronized_vs_ReentrantLock.pdf)
 
-**分布式ID的应用和考量**  [Web浏览](https://github.com/QuChunhe/blogs/blob/master/%E5%88%86%E5%B8%83%E5%BC%8FID%E7%9A%84%E5%BA%94%E7%94%A8%E5%92%8C%E8%80%83%E9%87%8F.md)  [pdf下载](https://github.com/QuChunhe/blogs/raw/master/files/2020-06-14_%E5%88%86%E5%B8%83%E5%BC%8FID%E7%9A%84%E5%BA%94%E7%94%A8%E5%92%8C%E8%80%83%E9%87%8F.pdf)
+**并发(Concurrency)与并行(Parallelism)**  [Web浏览](https://github.com/QuChunhe/blogs/blob/master/Concurrency_vs_Parallelism.md)  [pdf下载](https://github.com/QuChunhe/blogs/raw/master/files/2020-05-25_Concurrency_vs_Parallelism.pdf)
+
 
 # 软件工程和软件设计
 
+
 **升级是个麻烦事**  [Web浏览](https://github.com/QuChunhe/blogs/blob/master/%E5%8D%87%E7%BA%A7%E6%98%AF%E4%B8%AA%E9%BA%BB%E7%83%A6%E4%BA%8B.md)  [pdf下载](https://github.com/QuChunhe/blogs/raw/master/files/2020-06-17_%E5%8D%87%E7%BA%A7%E6%98%AF%E4%B8%AA%E9%BA%BB%E7%83%A6%E4%BA%8B.pdf)
-
-
 
 
 # 数学
